@@ -74,22 +74,6 @@ all of the required packages (ideally into a virtual environment). You can
 install packages from the included `pyproject.toml` file in the root of the
 design and tools directories. This file should not be modified.
 
-### Linux:
-
-```bash
-# Create a virtual environment in the root of the design
-cd <example_root>
-python -m venv .venv --prompt ectf-example
-
-# Enable virtual environment
-. ./.venv/bin/activate
-
-# Install the host tools
-python -m pip install ./tools/
-
-# Install the host design elements as an editable module
-python -m pip install -e ./design/
-```
 
 ### PowerShell:
 
@@ -131,13 +115,7 @@ The Decoder can be built next. The generated secrets will be available in the do
 These commands will generate a Decoder build with a Device ID 0xdeadbeef. Build outputs are copied to the `build_out`
 directory.
 
-### Linux:
 
-```bash
-cd <example_root>/decoder
-docker build -t decoder .
-docker run --rm -v ./build_out:/out -v ./:/decoder -v ./../secrets:/secrets -e DECODER_ID=0xdeadbeef decoder
-```
 
 ### PowerShell:
 
@@ -202,11 +180,6 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
-
-```bash
-python -m ectf25.utils.flash ./build_out/max78000.bin /dev/tty.usbmodem11302
-```
 
 #### PowerShell
 
@@ -235,11 +208,7 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
 
-```bash
-python -m ectf25.tv.list /dev/tty.usbmodem11302
-```
 
 #### PowerShell
 
@@ -268,11 +237,6 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
-
-```bash
-python -m ectf25.tv.subscribe subscription.bin /dev/tty.usbmodem11302
-```
 
 #### PowerShell
 
@@ -316,11 +280,6 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
-
-```bash
-python -m ectf25.utils.tester --port /dev/tty.usbmodem11302 -s ./secrets.json rand -c 1 -f 64
-```
 
 #### PowerShell
 
@@ -356,11 +315,6 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
-
-```bash
-python -m ectf25.uplink secrets/secrets.json localhost 2000 1:10:frames/x_c0.json
-```
 
 #### PowerShell
 
@@ -416,11 +370,7 @@ options:
 
 ### **Example Utilization**
 
-#### Linux
 
-```bash
-python -m ectf25.tv.run localhost 2001 /dev/tty.usbmodem11302
-```
 
 #### PowerShell
 
