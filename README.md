@@ -1,6 +1,7 @@
-# eCTF Insecure Example
+# eCTF 2025 Willis
 
-This repository holds the insecure example design for an eCTF Satellite TV System.
+This repository is the clone of the insecure example design for an eCTF Satellite TV System.  
+The goal is to secure the encoder and decoder.
 
 ## Layout
 
