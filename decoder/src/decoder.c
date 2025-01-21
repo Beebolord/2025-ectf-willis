@@ -10,7 +10,8 @@
  *
  * @copyright Copyright (c) 2025 The MITRE Corporation
  */
-//This is a test comment
+
+//This is a test
 /*********************** INCLUDES *************************/
 #include <stdio.h>
 #include <stdint.h>
