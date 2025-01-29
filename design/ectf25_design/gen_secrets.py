@@ -12,6 +12,7 @@ Copyright: Copyright (c) 2025 The MITRE Corporation
 
 import argparse
 import json
+import secrets
 from pathlib import Path
 
 from loguru import logger
@@ -29,15 +30,16 @@ def gen_secrets(channels: list[int]) -> bytes:
 
     :returns: Contents of the secrets file
     """
-    # TODO: Update this function to generate any system-wide secrets needed by
-    #   your design
+
+    # Generate 256-bit key for use by the encoder/decoder
+    key = secrets.token_bytes(32)
 
     # Create the secrets object
     # You can change this to generate any secret material
     # The secrets file will never be shared with attackers
     secrets = {
         "channels": channels,
-        "some_secrets": "EXAMPLE",
+        "key": key.hex()
     }
 
     # NOTE: if you choose to use JSON for your file type, you will not be able to

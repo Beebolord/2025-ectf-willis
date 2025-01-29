@@ -13,7 +13,9 @@ Copyright: Copyright (c) 2025 The MITRE Corporation
 import argparse
 import struct
 import json
-
+from Crypto.Cipher import AES #pycryptodome library needed
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
 
 class Encoder:
     def __init__(self, secrets: bytes):
@@ -30,8 +32,7 @@ class Encoder:
         secrets = json.loads(secrets)
 
         # Load the example secrets for use in Encoder.encode
-        # This will be "EXAMPLE" in the reference design"
-        self.some_secrets = secrets["some_secrets"]
+        self.key = secrets["key"]
 
     def encode(self, channel: int, frame: bytes, timestamp: int) -> bytes:
         """The frame encoder function
@@ -54,7 +55,19 @@ class Encoder:
         # TODO: encode the satellite frames so that they meet functional and
         #  security requirements
 
-        return struct.pack("<IQ", channel, timestamp) + frame
+        # Generate 16 byte initialization vector
+        iv = get_random_bytes(16)
+
+        # Pad frame to be a multiple of 16 bytes (128 bits) [block size for AES]
+        paddedFrame = pad(frame, AES.block_size)
+
+        cipher = AES.new(self.key, AES.MODE_CBC, iv)
+
+        # Encrypt the frame
+        encryptedFrame = cipher.encrypt(paddedFrame)
+
+        # Add the initialization to final frame, needed by decoder
+        return struct.pack("<IQ", channel, timestamp) + iv + encryptedFrame
 
 
 def main():
